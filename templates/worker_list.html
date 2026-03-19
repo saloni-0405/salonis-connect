@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<h2 class="mb-4">Available {{ category.name }} Workers</h2>
+
+<!-- FILTER SECTION -->
+<form method="GET" class="row g-3 mb-4">
+
+<div class="col-md-3">
+<select name="area" class="form-control">
+<option value="">All Areas</option>
+<option value="Kothrud">Kothrud</option>
+<option value="Baner">Baner</option>
+<option value="Wakad">Wakad</option>
+<option value="Hinjewadi">Hinjewadi</option>
+<option value="Hadapsar">Hadapsar</option>
+<option value="Shivajinagar">Shivajinagar</option>
+<option value="NDARoad">NDA Road</option>
+<option value="Uttamnagar">Uttamnagar</option>
+</select>
+</div>
+
+<div class="col-md-3">
+<select name="experience" class="form-control">
+<option value="">Any Experience</option>
+<option value="1">1+ Years</option>
+<option value="3">3+ Years</option>
+<option value="5">5+ Years</option>
+<option value="10">10+ Years</option>
+</select>
+</div>
+
+<div class="col-md-3">
+<select name="rating" class="form-control">
+<option value="">Any Rating</option>
+<option value="3">3+ Stars</option>
+<option value="4">4+ Stars</option>
+<option value="5">5 Stars</option>
+</select>
+</div>
+
+<div class="col-md-3">
+<select name="sort" class="form-control">
+<option value="">Sort By</option>
+<option value="rating">Top Rated</option>
+<option value="price">Lowest Price</option>
+</select>
+</div>
+
+<div class="col-md-12">
+<button type="submit" class="btn btn-primary">
+Apply Filters
+</button>
+</div>
+
+</form>
+
+<p>Total workers: {{ worker_data|length }}</p>
+
+<div class="worker-container">
+
+{% for item in worker_data %}
+
+<div class="worker-card">
+
+<!-- Worker Image -->
+{% if item.worker.profile_image %}
+<img src="{{ item.worker.profile_image.url }}" class="worker-img">
+{% else %}
+<img src="{% static 'images/default_worker.png' %}" class="worker-img">
+{% endif %}
+
+<!-- Worker Name -->
+<h4>{{ item.worker.user.username }}</h4>
+
+<!-- Experience -->
+<p><b>Experience:</b> {{ item.worker.experience }} years</p>
+
+<!-- Rating -->
+<p>
+⭐
+{% if item.avg_rating %}
+{{ item.avg_rating|floatformat:1 }}
+{% else %}
+No ratings yet
+{% endif %}
+</p>
+
+<!-- Area -->
+{% if item.worker.area %}
+<p><b>Area:</b> {{ item.worker.area }}</p>
+{% endif %}
+
+<!-- Profile Button -->
+<a href="/worker-profile/{{ item.worker.id }}/" class="worker-btn">
+View Profile
+</a>
+
+</div>
+
+{% empty %}
+
+<p>No workers found</p>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}

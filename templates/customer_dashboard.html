@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+<h2 class="mb-4 text-center">My Bookings</h2>
+
+<table class="table table-bordered shadow">
+
+<thead class="table-dark">
+
+<tr>
+
+<th>Service</th>
+<th>Worker</th>
+<th>Date</th>
+<th>Status</th>
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for booking in bookings %}
+
+<tr>
+
+<td>{{ booking.worker.category.name }}</td>
+
+<td>{{ booking.worker.user.username }}</td>
+
+<td>{{ booking.service_date }}</td>
+
+<td>
+
+{% if booking.status == "Pending" %}
+<span class="badge bg-warning">Pending</span>
+
+{% elif booking.status == "Confirmed" %}
+<span class="badge bg-primary">Confirmed</span>
+
+{% elif booking.status == "In Progress" %}
+<span class="badge bg-info">In Progress</span>
+
+{% elif booking.status == "Completed" %}
+<span class="badge bg-success">Completed</span>
+
+{% elif booking.status == "Finished" %}
+<span class="badge bg-dark">Finished</span>
+
+{% elif booking.status == "Cancelled" %}
+<span class="badge bg-danger">Cancelled</span>
+
+{% endif %}
+
+</td>
+
+<td>
+
+{% if booking.status == "Completed" %}
+
+<a href="{% url 'confirm_completion' booking.id %}"
+class="btn btn-success btn-sm">
+Confirm Job
+</a>
+
+{% endif %}
+
+{% if booking.status == "Finished" %}
+
+<a href="{% url 'add_review' booking.id %}"
+class="btn btn-warning btn-sm">
+Add Review
+</a>
+
+{% endif %}
+
+</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+
+<td colspan="5" class="text-center">
+
+No bookings yet.
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+{% endblock %}

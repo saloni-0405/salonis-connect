@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+<h2 class="text-center mb-4">Worker Profile</h2>
+
+<div class="card shadow p-4 mb-4">
+
+    <h4>{{ worker.user.username }}</h4>
+
+    <p><strong>Category:</strong> {{ worker.category.name }}</p>
+
+    <p><strong>Experience:</strong> {{ worker.experience }} years</p>
+
+    <p><strong>Phone:</strong> {{ worker.phone }}</p>
+
+    <p><strong>Address:</strong> {{ worker.address }}</p>
+
+    {% if worker.profile_image %}
+        <img src="{{ worker.profile_image.url }}" width="200">
+    {% endif %}
+    <a href="/book/{{ worker.id }}/" class="btn btn-success mt-3">
+    Book Service
+</a>
+
+</div>
+
+
+<!-- Rating Section -->
+
+<div class="card shadow p-4 mb-4">
+
+<h4>⭐ Reviews ({{ total_reviews }})</h4>
+
+{% if average_rating %}
+<p><strong>Average Rating:</strong> ⭐ {{ average_rating|floatformat:1 }} / 5</p>
+{% else %}
+<p>No ratings yet.</p>
+{% endif %}
+
+</div>
+
+
+<!-- Reviews List -->
+
+{% for review in reviews %}
+
+<div class="card shadow-sm p-3 mb-3">
+<div>
+
+{% for i in "12345" %}
+
+    {% if forloop.counter <= review.rating %}
+        <span style="color:gold;">★</span>
+    {% else %}
+        <span style="color:lightgray;">★</span>
+    {% endif %}
+
+{% endfor %}
+
+</div>
+
+<p>{{ review.comment }}</p>
+
+<small class="text-muted">
+Reviewed by {{ review.customer.username }}
+</small>
+
+</div>
+
+{% empty %}
+
+<p>No reviews yet.</p>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}

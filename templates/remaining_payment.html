@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Remaining Payment</h2>
+
+<p>Total Cost: ₹{{ booking.total_price }}</p>
+<p>Remaining Amount (70%): ₹{{ remaining_amount }}</p>
+
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-success">
+        Pay ₹{{ remaining_amount }}
+    </button>
+</form>
+{% endblock %}

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Worker Registration</title>
+
+<style>
+
+body{
+font-family: Arial;
+background:#f4f4f4;
+}
+
+.register-box{
+width:350px;
+margin:60px auto;
+background:white;
+padding:30px;
+border-radius:10px;
+text-align:center;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+input, select{
+width:90%;
+padding:10px;
+margin:10px;
+}
+
+button{
+padding:10px 20px;
+background:#007bff;
+color:white;
+border:none;
+border-radius:5px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="register-box">
+
+<h2>Worker Registration</h2>
+
+<form method="POST" enctype="multipart/form-data">
+
+{% csrf_token %}
+
+<input type="text" name="username" placeholder="Username" required>
+
+<input type="email" name="email" placeholder="Email" required>
+
+<input type="password" name="password" placeholder="Password" required>
+
+<input type="text" name="phone" placeholder="Phone Number" required>
+
+<select name="category">
+
+{% for category in categories %}
+
+<option value="{{category.id}}">{{category.name}}</option>
+
+{% endfor %}
+
+</select>
+
+<input type="file" name="photo">
+
+<button type="submit">Register</button>
+
+</form>
+
+</div>
+
+</body>
+
+</html>

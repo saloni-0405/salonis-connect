@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Search Results for "{{ query }}"</h2>
+
+{% for category in categories %}
+
+<div class="card p-3 mb-3">
+
+<h4>{{ category.name }}</h4>
+
+<a href="/workers/{{ category.id }}/"
+class="btn btn-primary">
+View Workers
+</a>
+
+</div>
+
+{% empty %}
+
+<p>No services found.</p>
+
+{% endfor %}
+
+{% endblock %}

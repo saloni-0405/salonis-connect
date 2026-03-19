@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 class="mb-4 text-center">Worker Dashboard</h2>
+
+<!-- Earnings Section -->
+<div class="row mb-4">
+
+    <div class="col-md-3">
+        <div class="card text-center shadow-sm p-3">
+            <h6>Total Earned</h6>
+            <h4>₹{{ total_earned }}</h4>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-center shadow-sm p-3">
+            <h6>Your Payout (80%)</h6>
+            <h4 class="text-success">₹{{ worker_payout }}</h4>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-center shadow-sm p-3">
+            <h6>Platform Commission</h6>
+            <h4 class="text-danger">₹{{ platform_commission }}</h4>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-center shadow-sm p-3">
+            <h6>Completed Jobs</h6>
+            <h4>{{ completed_jobs }}</h4>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- Availability Section -->
+<div class="card mb-4 shadow-sm">
+    <div class="card-body text-center">
+
+        <h5>Availability Status</h5>
+
+        {% if worker.is_available %}
+            <p class="text-success fw-bold">Available</p>
+
+            <a href="{% url 'toggle_availability' %}"
+            class="btn btn-danger">
+            Set Unavailable
+            </a>
+
+        {% else %}
+            <p class="text-danger fw-bold">Not Available</p>
+
+            <a href="{% url 'toggle_availability' %}"
+            class="btn btn-success">
+            Set Available
+            </a>
+
+        {% endif %}
+
+    </div>
+</div>
+
+
+<!-- Bookings Table -->
+<table class="table table-bordered shadow-sm">
+
+    <thead class="table-dark">
+        <tr>
+            <th>Customer</th>
+            <th>Date</th>
+            <th>Address</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        {% for booking in bookings %}
+
+        <tr>
+
+            <td>{{ booking.customer.username }}</td>
+            <td>{{ booking.service_date }}</td>
+            <td>{{ booking.address }}</td>
+
+            <td>
+
+                {% if booking.status == "Pending" %}
+                    <span class="badge bg-warning">Pending</span>
+
+                {% elif booking.status == "Confirmed" %}
+                    <span class="badge bg-primary">Confirmed</span>
+
+                {% elif booking.status == "In Progress" %}
+                    <span class="badge bg-info">In Progress</span>
+
+                {% elif booking.status == "Completed" %}
+                    <span class="badge bg-success">Completed</span>
+
+                {% elif booking.status == "Finished" %}
+                    <span class="badge bg-dark">Finished</span>
+
+                {% elif booking.status == "Cancelled" %}
+                    <span class="badge bg-danger">Cancelled</span>
+
+                {% endif %}
+
+            </td>
+
+            <td>
+
+                {% if booking.status == "Confirmed" %}
+                    <a href="{% url 'start_work' booking.id %}"
+                    class="btn btn-warning btn-sm">
+                        Start Work
+                    </a>
+                {% endif %}
+
+                {% if booking.status == "In Progress" %}
+                    <a href="{% url 'complete_work' booking.id %}"
+                class="btn btn-success btn-sm">
+                        Mark Completed
+                    </a>
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+        {% empty %}
+
+        <tr>
+            <td colspan="5" class="text-center">
+                No bookings assigned.
+            </td>
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% endblock %}

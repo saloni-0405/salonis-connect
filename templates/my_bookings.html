@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 class="mb-4 text-center">My Bookings</h2>
+
+{% for booking in bookings %}
+<div class="card mb-4 shadow-sm p-4">
+
+    <h5>Worker: {{ booking.worker.user.username }}</h5>
+    <p><strong>Service Date:</strong> {{ booking.service_date }}</p>
+    <p><strong>Total Price:</strong> ₹{{ booking.total_price }}</p>
+
+    <!-- STATUS BADGE -->
+    <p>
+        <strong>Status:</strong>
+        {% if booking.status == "Pending" %}
+            <span class="badge bg-warning">Pending</span>
+        {% elif booking.status == "Confirmed" %}
+            <span class="badge bg-primary">Confirmed</span>
+        {% elif booking.status == "In Progress" %}
+            <span class="badge bg-info">In Progress</span>
+        {% elif booking.status == "Completed" %}
+            <span class="badge bg-success">Completed</span>
+        {% elif booking.status == "Finished" %}
+            <span class="badge bg-dark">Finished</span>
+        {% elif booking.status == "Cancelled" %}
+            <span class="badge bg-danger">Cancelled</span>
+        {% endif %}
+    </p>
+
+    <!-- STATUS TIMELINE -->
+    <div class="d-flex justify-content-between text-center mt-4">
+
+        <div class="flex-fill">
+            <div class="badge {% if booking.status != 'Pending' and booking.status != 'Cancelled' %}bg-success{% else %}bg-warning{% endif %}">
+                Pending
+            </div>
+        </div>
+
+        <div class="flex-fill">
+            <div class="badge {% if booking.status in 'Confirmed In Progress Completed Finished' %}bg-success{% else %}bg-secondary{% endif %}">
+                Confirmed
+            </div>
+        </div>
+
+        <div class="flex-fill">
+            <div class="badge {% if booking.status == 'In Progress' or booking.status == 'Completed' or booking.status == 'Finished' %}bg-success{% else %}bg-secondary{% endif %}">
+                In Progress
+            </div>
+        </div>
+
+        <div class="flex-fill">
+            <div class="badge {% if booking.status == 'Completed' or booking.status == 'Finished' %}bg-success{% else %}bg-secondary{% endif %}">
+                Completed
+            </div>
+        </div>
+
+        <div class="flex-fill">
+            <div class="badge {% if booking.status == 'Finished' %}bg-success{% else %}bg-secondary{% endif %}">
+                Finished
+            </div>
+        </div>
+
+    </div>
+
+    <!-- PROGRESS BAR -->
+    <div class="mt-3">
+        <div class="progress" style="height: 20px;">
+            <div class="progress-bar bg-info"
+                 role="progressbar"
+                 style="
+                    width:
+                    {% if booking.status == 'Pending' %}20%
+                    {% elif booking.status == 'Confirmed' %}40%
+                    {% elif booking.status == 'In Progress' %}60%
+                    {% elif booking.status == 'Completed' %}80%
+                    {% elif booking.status == 'Finished' %}100%
+                    {% else %}10%
+                    {% endif %}
+                 ">
+                {{ booking.status }}
+            </div>
+        </div>
+    </div>
+
+    <!-- ACTION BUTTONS -->
+    <div class="mt-4">
+
+        {% if booking.status == "Pending" or booking.status == "Confirmed" %}
+        <a href="/cancel-booking/{{ booking.id }}/"
+        class="btn btn-danger btn-sm">
+        Cancel Booking
+        </a>
+        {% endif %}
+
+        {% if booking.status == "Completed" %}
+        <a href="{% url 'confirm_completion' booking.id %}"
+        class="btn btn-success btn-sm">
+        Confirm Completion
+        </a>
+        {% endif %}
+
+        {% if booking.status == "Finished" %}
+        <a href="{% url 'add_review' booking.id %}"
+        class="btn btn-primary btn-sm">
+        Add Review
+        </a>
+        {% endif %}
+
+        {% if booking.status == "Cancelled" %}
+        <p class="text-danger">Booking Cancelled</p>
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% empty %}
+<p class="text-center">No bookings yet.</p>
+{% endfor %}
+
+{% endblock %}

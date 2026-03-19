@@ -1,0 +1,137 @@
+SALONI'S CONNECT – PROJECT DEMO FLOW (LOCALHOST LINKS)
+
+---
+
+1. START APPLICATION
+
+---
+
+Run server:
+python manage.py runserver
+
+Base URL:
+http://127.0.0.1:8000/
+
+---
+
+2. HOME PAGE (START HERE)
+
+---
+
+http://127.0.0.1:8000/
+
+→ Shows:
+
+* Hero section
+* Services
+* Top Workers
+* Join as Customer form
+
+---
+
+3. CUSTOMER FLOW
+
+---
+
+Step 1: Register as Customer
+http://127.0.0.1:8000/customer-register/
+
+Step 2: Login
+http://127.0.0.1:8000/login/
+
+Step 3: View Services
+http://127.0.0.1:8000/categories/
+
+Step 4: Select Category → View Workers
+Example:
+http://127.0.0.1:8000/workers/1/
+
+Step 5: View Worker Profile
+Example:
+http://127.0.0.1:8000/worker-profile/1/
+
+Step 6: Book Worker
+http://127.0.0.1:8000/book/1/
+
+Step 7: Payment Page
+http://127.0.0.1:8000/payment/1/
+
+Step 8: My Bookings
+http://127.0.0.1:8000/my-bookings/
+
+Step 9: Add Review
+http://127.0.0.1:8000/add-review/1/
+
+---
+
+4. WORKER FLOW
+
+---
+
+Step 1: Register as Worker
+http://127.0.0.1:8000/worker-register/
+
+Step 2: Login
+
+Step 3: Worker Dashboard
+http://127.0.0.1:8000/worker-dashboard/
+
+Step 4: Edit Profile
+http://127.0.0.1:8000/edit-profile/
+
+Step 5: Accept Booking
+http://127.0.0.1:8000/accept-booking/1/
+
+Step 6: Start Work
+http://127.0.0.1:8000/start-work/1/
+
+Step 7: Complete Work
+http://127.0.0.1:8000/complete-work/1/
+
+---
+
+5. ADMIN FLOW
+
+---
+
+Admin Panel:
+http://127.0.0.1:8000/admin/
+
+Custom Admin Dashboard:
+http://127.0.0.1:8000/admin-dashboard/
+
+Manage Workers:
+http://127.0.0.1:8000/manage-workers/
+
+---
+
+6. EXTRA FEATURES
+
+---
+
+Join as Customer (Lead Form):
+http://127.0.0.1:8000/join-as-customer/
+
+Search:
+http://127.0.0.1:8000/search/?q=plumbing
+
+WhatsApp Contact:
+http://127.0.0.1:8000/contact-whatsapp/
+
+---
+
+7. COMPLETE PROJECT FLOW (SHORT FOR VIVA)
+
+---
+
+1. Customer registers & logs in
+2. Customer selects service & worker
+3. Customer books service with date & time slot
+4. Customer makes advance payment
+5. Worker accepts and completes job
+6. Customer gives review & rating
+7. Admin manages workers & bookings
+
+---
+
+## END OF DEMO

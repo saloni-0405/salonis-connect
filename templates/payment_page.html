@@ -1,0 +1,228 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+
+            {% if error %}
+            <div class="alert alert-danger text-center shadow-sm">
+                {{ error }}
+            </div>
+            {% endif %}
+
+            {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} text-center shadow-sm">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            {% endif %}
+
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="card-header bg-dark text-white text-center py-4">
+                    <h2 class="fw-bold mb-1">Advance Payment</h2>
+                    <p class="mb-0 text-light">
+                        Confirm your booking by paying the advance amount securely
+                    </p>
+                </div>
+
+                <div class="card-body p-4 p-md-5">
+
+                    <!-- Booking Summary -->
+                    <div class="mb-4">
+                        <h4 class="fw-bold mb-3">Booking Summary</h4>
+
+                        <div class="bg-light border rounded-4 p-4">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="summary-box">
+                                        <p class="mb-1 text-muted">Worker Name</p>
+                                        <h6 class="mb-0">{{ booking.worker.user.username }}</h6>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="summary-box">
+                                        <p class="mb-1 text-muted">Service</p>
+                                        <h6 class="mb-0">{{ booking.worker.category.name }}</h6>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="summary-box">
+                                        <p class="mb-1 text-muted">Service Date</p>
+                                        <h6 class="mb-0">{{ booking.service_date }}</h6>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="summary-box">
+                                        <p class="mb-1 text-muted">Time Slot</p>
+                                        <h6 class="mb-0">{{ booking.time_slot }}</h6>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="summary-box">
+                                        <p class="mb-1 text-muted">Service Address</p>
+                                        <h6 class="mb-0">{{ booking.address }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr class="my-4">
+
+                            <div class="row text-center g-3">
+                                <div class="col-md-6">
+                                    <div class="border rounded-3 p-3 bg-white h-100">
+                                        <p class="mb-1 text-muted">Total Service Price</p>
+                                        <h4 class="mb-0">₹{{ booking.total_price }}</h4>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="border rounded-3 p-3 bg-white h-100">
+                                        <p class="mb-1 text-muted">Advance Amount</p>
+                                        <h4 class="mb-0 text-success">₹{{ advance_amount }}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Form -->
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold fs-5">Select Payment Method</label>
+                            <p class="text-muted mb-3">
+                                Cash is not allowed for advance booking. Please choose an online payment method.
+                            </p>
+
+                            <div class="row g-3">
+
+                                <!-- UPI -->
+                                <div class="col-md-4">
+                                    <label class="payment-option w-100">
+                                        <input type="radio" name="payment_method" value="UPI" required>
+                                        <div class="payment-card">
+                                            <div class="payment-icon">📱</div>
+                                            <h6 class="mb-1">UPI</h6>
+                                            <small class="text-muted">Google Pay, PhonePe, Paytm</small>
+                                        </div>
+                                    </label>
+                                </div>
+
+                                <!-- Card -->
+                                <div class="col-md-4">
+                                    <label class="payment-option w-100">
+                                        <input type="radio" name="payment_method" value="Card" required>
+                                        <div class="payment-card">
+                                            <div class="payment-icon">💳</div>
+                                            <h6 class="mb-1">Card</h6>
+                                            <small class="text-muted">Debit / Credit Card</small>
+                                        </div>
+                                    </label>
+                                </div>
+
+                                <!-- Net Banking -->
+                                <div class="col-md-4">
+                                    <label class="payment-option w-100">
+                                        <input type="radio" name="payment_method" value="Net Banking" required>
+                                        <div class="payment-card">
+                                            <div class="payment-icon">🏦</div>
+                                            <h6 class="mb-1">Net Banking</h6>
+                                            <small class="text-muted">Pay via bank account</small>
+                                        </div>
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Refund Policy -->
+                        <div class="alert alert-warning rounded-4 mb-4">
+                            <h5 class="fw-bold mb-3">Refund Policy</h5>
+                            <ul class="mb-0 ps-3">
+                                <li>Advance payment is refundable only if the booking is cancelled before service confirmation.</li>
+                                <li>If the worker cancels the booking, the full advance amount will be refunded.</li>
+                                <li>If the customer cancels at the last moment, refund may not be applicable.</li>
+                                <li>After the service is started or completed, the advance amount is non-refundable.</li>
+                                <li>The remaining balance can be paid after service completion.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Important Note -->
+                        <div class="alert alert-info rounded-4 mb-4">
+                            <strong>Note:</strong> This is only the advance payment for booking confirmation.
+                            The remaining amount can be paid after the service is completed.
+                        </div>
+
+                        <button type="submit" class="btn btn-success btn-lg w-100 rounded-3 fw-semibold">
+                            Pay ₹{{ advance_amount }} Now
+                        </button>
+                    </form>
+
+                    <div class="text-center mt-4">
+                        <a href="{% url 'customer_dashboard' %}" class="btn btn-outline-secondary rounded-3 px-4">
+                            Cancel and Go Back
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+.summary-box h6{
+    font-weight: 600;
+    color: #212529;
+}
+
+.payment-option input[type="radio"]{
+    display: none;
+}
+
+.payment-card{
+    border: 2px solid #dee2e6;
+    border-radius: 16px;
+    padding: 22px 16px;
+    text-align: center;
+    background: #fff;
+    transition: all 0.25s ease;
+    cursor: pointer;
+    height: 100%;
+}
+
+.payment-card:hover{
+    border-color: #198754;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.payment-option input[type="radio"]:checked + .payment-card{
+    border-color: #198754;
+    background: #eefaf3;
+    box-shadow: 0 8px 20px rgba(25,135,84,0.15);
+}
+
+.payment-icon{
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 768px){
+    .card-body{
+        padding: 20px !important;
+    }
+}
+</style>
+
+{% endblock %}

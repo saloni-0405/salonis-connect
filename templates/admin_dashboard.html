@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 class="mb-4 text-center">Admin Revenue Dashboard</h2>
+
+<div class="row text-center mb-4">
+
+    <div class="col-md-3">
+        <a href="?status=" class="btn btn-dark w-100">
+            Total Orders <br> {{ total_bookings|default:0 }}
+        </a>
+    </div>
+
+    <div class="col-md-3">
+        <a href="?status=Confirmed" class="btn btn-primary w-100">
+            Confirmed <br> {{ confirmed|default:0 }}
+        </a>
+    </div>
+
+    <div class="col-md-3">
+        <a href="?status=Finished" class="btn btn-success w-100">
+            Completed <br> {{ finished|default:0 }}
+        </a>
+    </div>
+
+    <div class="col-md-3">
+        <a href="?status=Cancelled" class="btn btn-danger w-100">
+            Cancelled <br> {{ cancelled|default:0 }}
+        </a>
+    </div>
+
+</div>
+
+<!-- Revenue Section -->
+
+<div class="card p-3 shadow mb-3">
+    <h4>Total Paid: ₹{{ total_paid|default:0 }}</h4>
+    <h5>Total Refunded: ₹{{ total_refunded|default:0 }}</h5>
+    <h5>Net Revenue: ₹{{ net_revenue|default:0 }}</h5>
+</div>
+
+<div class="card p-3 shadow mb-4">
+    <h5>Platform Commission (20%): ₹{{ platform_commission|default:0 }}</h5>
+    <h5>Worker Payout (80%): ₹{{ worker_payout|default:0 }}</h5>
+</div>
+
+<hr>
+
+<h4>Booking Details</h4>
+
+<table class="table table-bordered mt-3">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Customer</th>
+            <th>Worker</th>
+            <th>Status</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for booking in bookings %}
+        <tr>
+            <td>{{ booking.id }}</td>
+            <td>{{ booking.customer.username }}</td>
+            <td>{{ booking.worker.user.username }}</td>
+            <td>{{ booking.status }}</td>
+            <td>₹{{ booking.total_price }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5" class="text-center">No bookings found</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<hr>
+
+<h4 class="mt-4">Booking Status Overview</h4>
+
+<canvas id="statusChart" height="100"></canvas>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    const confirmed = {{ confirmed|default:0 }};
+    const finished = {{ finished|default:0 }};
+    const cancelled = {{ cancelled|default:0 }};
+
+    const ctx = document.getElementById('statusChart').getContext('2d');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Confirmed', 'Finished', 'Cancelled'],
+            datasets: [{
+                label: 'Number of Bookings',
+                data: [confirmed, finished, cancelled],
+                backgroundColor: [
+                    '#0d6efd',
+                    '#198754',
+                    '#dc3545'
+                ],
+                borderRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: true
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+});
+</script>
+
+{% endblock %}

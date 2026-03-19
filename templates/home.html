@@ -1,0 +1,549 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+.hero-section{
+    background: linear-gradient(135deg, #ffffff, #f3f7ff);
+    padding: 70px 25px;
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    margin-bottom: 50px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section::before{
+    content: "";
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 180px;
+    height: 180px;
+    background: rgba(13,110,253,0.08);
+    border-radius: 50%;
+}
+
+.hero-section::after{
+    content: "";
+    position: absolute;
+    bottom: -60px;
+    left: -60px;
+    width: 200px;
+    height: 200px;
+    background: rgba(255,77,109,0.07);
+    border-radius: 50%;
+}
+
+.hero-title{
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+    color: #212529;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-brand{
+    background: linear-gradient(90deg,#ff8a00,#ff4d6d,#7b61ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-subtitle{
+    font-size: 1.15rem;
+    color: #5f6b7a;
+    max-width: 750px;
+    margin: 0 auto 30px;
+    line-height: 1.8;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-search{
+    max-width: 650px;
+    margin: auto;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-search .form-control{
+    height: 52px;
+    border-radius: 12px 0 0 12px;
+    border: 1px solid #dbe3f0;
+    box-shadow: none;
+}
+
+.hero-search .btn{
+    border-radius: 0 12px 12px 0;
+    padding: 0 24px;
+    font-weight: 600;
+}
+
+.service-card{
+    border: none;
+    border-radius: 18px;
+    transition: all 0.3s ease;
+}
+
+.service-card:hover{
+    transform: translateY(-8px);
+    box-shadow: 0 14px 28px rgba(0,0,0,0.12);
+}
+
+.stats-box{
+    background: #fff;
+    padding: 28px 20px;
+    border-radius: 18px;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+    transition: 0.3s;
+}
+
+.stats-box:hover{
+    transform: translateY(-6px);
+}
+
+.stats-number{
+    font-size: 2rem;
+    font-weight: 800;
+    color: #0d6efd;
+    margin-bottom: 8px;
+}
+
+.fade-in{
+    animation: fadeInUp 1s ease;
+}
+
+@keyframes fadeInUp{
+    from{
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px){
+    .hero-title{
+        font-size: 2.1rem;
+    }
+
+    .hero-subtitle{
+        font-size: 1rem;
+    }
+
+    .hero-search{
+        width: 100% !important;
+    }
+}
+</style>
+
+<!-- Hero Section -->
+<div class="hero-section text-center">
+
+    <h1 class="hero-title">
+        Welcome to <span class="hero-brand">Saloni's Connect</span>
+    </h1>
+
+    <p class="hero-subtitle">
+        Trusted professionals at your doorstep. Fast, reliable, secure and hassle-free home services whenever you need them.
+    </p>
+
+    <form method="GET" action="{% url 'category_list' %}" class="mt-4">
+        <div class="input-group hero-search">
+            <input type="text"
+                   name="area"
+                   class="form-control"
+                   placeholder="Enter your area (Baner, Wakad, Kothrud...)">
+
+            <button class="btn btn-dark">
+                Search
+            </button>
+        </div>
+    </form>
+
+</div>
+
+<!-- ================= SERVICES SECTION ================= -->
+<div class="container mt-5 fade-in" id="services">
+
+    <h2 class="text-center mb-4">Our Services</h2>
+
+    <div class="row g-4 text-center">
+
+        <div class="col-md-3">
+            <div class="card p-4 shadow-sm h-100 service-card">
+                <i class="bi bi-tools fs-1 text-primary"></i>
+                <h5 class="mt-3">Plumbing</h5>
+                <p>Expert plumbers near you</p>
+                <a href="/categories/" class="btn btn-primary">Book Service</a>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card p-4 shadow-sm h-100 service-card">
+                <i class="bi bi-lightning-charge fs-1 text-warning"></i>
+                <h5 class="mt-3">Electrician</h5>
+                <p>Certified electricians</p>
+                <a href="/categories/" class="btn btn-primary">Book Service</a>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card p-4 shadow-sm h-100 service-card">
+                <i class="bi bi-house fs-1 text-success"></i>
+                <h5 class="mt-3">Cleaning</h5>
+                <p>Home cleaning experts</p>
+                <a href="/categories/" class="btn btn-primary">Book Service</a>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card p-4 shadow-sm h-100 service-card">
+                <i class="bi bi-gear fs-1 text-danger"></i>
+                <h5 class="mt-3">Appliance Repair</h5>
+                <p>Repair home appliances</p>
+                <a href="/categories/" class="btn btn-primary">Book Service</a>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================= TOP WORKERS ================= -->
+<div class="container mt-5 fade-in">
+
+    <h2 class="text-center mb-4">Top Rated Workers</h2>
+
+    <div class="row">
+
+        {% for worker in top_workers %}
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm text-center p-3 h-100">
+
+                {% if worker.profile_image %}
+                <img src="{{ worker.profile_image.url }}"
+                     class="img-fluid rounded-circle mb-3"
+                     style="height:120px;width:120px;object-fit:cover;margin:auto;">
+                {% else %}
+                <img src="/static/images/default_worker.png"
+                     class="img-fluid rounded-circle mb-3"
+                     style="height:120px;width:120px;object-fit:cover;margin:auto;">
+                {% endif %}
+
+                <h5>{{ worker.user.username }}</h5>
+
+                <p>⭐ {{ worker.avg_rating|default:"0"|floatformat:1 }}</p>
+
+                <p>{{ worker.category.name }}</p>
+
+                <a href="/worker-profile/{{ worker.id }}/" class="btn btn-primary btn-sm">
+                    View Profile
+                </a>
+
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center">
+            <p>No top workers available yet.</p>
+        </div>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+<!-- Buttons -->
+<div class="d-flex justify-content-center gap-3 mt-4 flex-wrap">
+
+    <a href="{% url 'category_list' %}" class="btn btn-primary btn-lg">
+        View Services
+    </a>
+
+    <a href="#services" class="btn btn-success btn-lg">
+        Book a Service
+    </a>
+
+    <a href="{% url 'worker_register' %}" class="btn btn-outline-primary btn-lg">
+        Join as Worker
+    </a>
+
+</div>
+
+<!-- ================= JOIN AS CUSTOMER ================= -->
+<section class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-body p-4 p-md-5">
+            <div class="text-center mb-4">
+                <h2 class="fw-bold">Join as Customer</h2>
+                <p class="text-muted mb-0">
+                    New here? Share your details and our team will contact you shortly.
+                </p>
+            </div>
+
+            <form method="POST" action="{% url 'join_as_customer' %}">
+                {% csrf_token %}
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" name="name" class="form-control" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Phone Number</label>
+                        <input type="text" name="phone" class="form-control" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Area</label>
+                        <input type="text" name="area" class="form-control" placeholder="Baner, Wakad, Kothrud..." required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Service Needed</label>
+                        <input type="text" name="service_needed" class="form-control" placeholder="Plumbing, Cleaning, Electrician..." required>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label">Message (Optional)</label>
+                        <textarea name="message" class="form-control" rows="4" placeholder="Tell us what service you need..."></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg w-100 mt-4">
+                    Submit Request
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- ================= SERVICES FROM DB ================= -->
+<div class="container mt-5">
+
+    <h2 class="text-center mb-4">Our Services</h2>
+
+    <div class="row text-center">
+
+        {% for category in categories %}
+        <div class="col-md-3 mb-4">
+            <div class="card shadow-sm p-3 h-100">
+                <h5>{{ category.name }}</h5>
+                <p>Starting from ₹{{ category.base_price }}</p>
+                <a href="/workers/{{ category.id }}/" class="btn btn-primary">
+                    View Workers
+                </a>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center">
+            <p>No services available yet.</p>
+        </div>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+<!-- Stats Section -->
+<hr class="my-5">
+
+<div class="container">
+    <div class="row text-center g-4">
+
+        <div class="col-md-4">
+            <div class="stats-box">
+                <h3 class="stats-number counter" data-target="{{ total_customers }}">0</h3>
+                <p>Happy Customers</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="stats-box">
+                <h3 class="stats-number counter" data-target="{{ total_workers }}">0</h3>
+                <p>Verified Workers</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="stats-box">
+                <h3 class="stats-number counter" data-target="{{ completed_services }}">0</h3>
+                <p>Completed Services</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<hr class="my-5">
+
+<!-- ================= TOP RATED PROFESSIONALS ================= -->
+<section class="container fade-in">
+
+    <h2 class="text-center mb-4">Top Rated Professionals</h2>
+
+    <div class="row justify-content-center g-4">
+
+        {% for worker in top_workers %}
+        <div class="col-md-4">
+            <div class="card text-center shadow-sm p-3 h-100">
+                <h5>{{ worker.user.username }}</h5>
+                <p><strong>Service:</strong> {{ worker.category.name }}</p>
+                <p>
+                    ⭐
+                    {% if worker.avg_rating %}
+                        {{ worker.avg_rating|floatformat:1 }}
+                    {% else %}
+                        No ratings yet
+                    {% endif %}
+                </p>
+
+                <a href="{% url 'worker_profile' worker.id %}" class="btn btn-primary">
+                    View Profile
+                </a>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center">
+            <p>No professionals available yet.</p>
+        </div>
+        {% endfor %}
+
+    </div>
+
+</section>
+
+<hr class="my-5">
+
+<!-- ================= CUSTOMER REVIEWS ================= -->
+<section class="container">
+
+    <h2 class="text-center mb-4">What Our Customers Say</h2>
+
+    <div class="row justify-content-center g-4">
+
+        {% for review in recent_reviews %}
+        <div class="col-md-4">
+            <div class="card shadow-sm p-3 h-100">
+                <div class="mb-2">
+                    {% for i in "12345" %}
+                        {% if forloop.counter <= review.rating %}
+                            <span style="color:gold;">★</span>
+                        {% else %}
+                            <span style="color:lightgray;">★</span>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+                <p class="mb-3">
+                    "{{ review.comment }}"
+                </p>
+
+                <small class="text-muted">
+                    — {{ review.customer.username }} (for {{ review.worker.category.name }})
+                </small>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center">
+            <p>No reviews yet.</p>
+        </div>
+        {% endfor %}
+
+    </div>
+
+</section>
+
+<!-- ================= CONTACT / SUPPORT ================= -->
+<hr class="my-5">
+
+<section class="container text-center">
+
+    <h2 class="mb-4">Need Help? Contact Us</h2>
+
+    <p class="mb-4">
+        Our support team is ready to help you with bookings and services.
+    </p>
+
+    <div class="row justify-content-center g-4">
+
+        <div class="col-md-3">
+            <a href="tel:+919876543210" class="text-decoration-none">
+                <div class="card shadow-sm p-4">
+                    <h5>📞 Call Us</h5>
+                    <p>+91 98765 43210</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a href="https://wa.me/919876543210" target="_blank" class="text-decoration-none">
+                <div class="card shadow-sm p-4">
+                    <h5>💬 WhatsApp</h5>
+                    <p>Chat With Us</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a href="mailto:support@salonisconnect.com" class="text-decoration-none">
+                <div class="card shadow-sm p-4">
+                    <h5>📧 Email</h5>
+                    <p>support@salonisconnect.com</p>
+                </div>
+            </a>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================= FLOATING WHATSAPP BUTTON ================= -->
+<a href="{% url 'whatsapp_contact' %}"
+   style="
+   position:fixed;
+   bottom:25px;
+   right:25px;
+   background:#25D366;
+   color:white;
+   padding:14px 20px;
+   border-radius:50px;
+   font-weight:600;
+   text-decoration:none;
+   box-shadow:0 6px 18px rgba(0,0,0,0.2);
+   z-index:999;
+   ">
+    💬 WhatsApp
+</a>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const counters = document.querySelectorAll(".counter");
+
+    counters.forEach(counter => {
+        const target = Number(counter.getAttribute("data-target")) || 0;
+        let current = 0;
+        const increment = Math.max(1, Math.ceil(target / 60));
+
+        const updateCounter = () => {
+            current += increment;
+
+            if (current >= target) {
+                counter.innerText = target;
+            } else {
+                counter.innerText = current;
+                requestAnimationFrame(updateCounter);
+            }
+        };
+
+        updateCounter();
+    });
+});
+</script>
+
+{% endblock %}

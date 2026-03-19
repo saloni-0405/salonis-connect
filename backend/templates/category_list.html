@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Categories</title>
+
+</head>
+
+<body>
+
+<h2>Service Categories</h2>
+
+{% for category in categories %}
+
+<p>
+
+<a href="/workers/{{category.id}}/">
+
+{{category.name}}
+
+</a>
+
+</p>
+
+{% endfor %}
+
+</body>
+
+</html>

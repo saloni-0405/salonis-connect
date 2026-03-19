@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 class="text-center mb-4">
+Rate {{ booking.worker.user.username }}
+</h2>
+
+<div class="card shadow p-4">
+
+<form method="POST">
+
+{% csrf_token %}
+
+<div class="mb-3">
+<label class="form-label">Rating</label>
+
+<select name="rating" class="form-control" required>
+<option value="">Select Rating</option>
+<option value="5">⭐⭐⭐⭐⭐ (5)</option>
+<option value="4">⭐⭐⭐⭐ (4)</option>
+<option value="3">⭐⭐⭐ (3)</option>
+<option value="2">⭐⭐ (2)</option>
+<option value="1">⭐ (1)</option>
+</select>
+
+</div>
+
+<div class="mb-3">
+<label class="form-label">Comment</label>
+
+<textarea name="comment"
+class="form-control"
+rows="4"
+placeholder="Write your experience...">
+</textarea>
+
+</div>
+
+<button type="submit" class="btn btn-success w-100">
+Submit Review
+</button>
+
+</form>
+
+</div>
+
+{% endblock %}
